@@ -10,6 +10,10 @@ builder.Services.AddDbContext<DataContext>(opt=>
 {
 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors(builder=>
+{
+    builder.AddPolicy("AllowOrigin" , options =>options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 
 var app = builder.Build();
@@ -19,7 +23,7 @@ var app = builder.Build();
 
 
 
-
+app.UseCors(builder=>builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 
